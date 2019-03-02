@@ -3,6 +3,24 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
 
+from core.forms import AddProductForm
+from store.models import ProductImage
+
+
+def index(request):
+    products_images = ProductImage.objects.filter(is_active=True, is_main_img=True)
+    return render(request, 'core/index.html', locals())
+
+
+class IndexView(TemplateView):
+    template_name = 'core/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.filter(is_active=True)
+        print(context['products'])
+        return context
+
 
 class HomeView(View):
     template_name = 'core/index.html'
@@ -28,4 +46,13 @@ class DeliveryView(TemplateView):
             'department': 'Отделение №7 (ул. пр.Победы, 46-а)',
             # 'id': self.kwargs['user_id']
         })
+        return context
+
+
+class AddProductView(TemplateView):
+    template_name = 'core/add_product.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AddProductView, self).get_context_data(**kwargs)
+        context['form'] = AddProductForm()
         return context

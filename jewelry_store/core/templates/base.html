@@ -1,0 +1,167 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}"/>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+
+    <title>{% block title %}{% endblock title %}</title>
+  </head>
+
+  <body>
+    <div class="header-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="header-contact">
+              <p><a href="mailto:info@sg-jewelry.com"> <i class="fa fa-envelope-o text-primary"></i>info@sg-jewelry.com</a>
+                &nbsp; &nbsp; <i class="fa fa-phone text-primary"></i>+38(097) 751-53-04</p>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <form class="header-search">
+              <input type="search" placeholder="Введите название товара или артикул" class="header-search-text">
+              <button type="submit"><i class="flaticon-search"></i></button>
+            </form>
+          </div>
+          <div class="col-lg-3 user-panel">
+            <div class="profile">
+              <a href="#" class="login"><i class="fa fa-sign-in"></i> <span class="d-none d-md-inline">Login</span></a> &nbsp; | &nbsp;
+              <a href="#" class="login"> <i class="fa fa-user"></i> <span class="d-none d-md-inline">Register</span></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--<header class="header-section position-sticky" style="top:5px">-->
+  <header class="header-section">
+    <nav class="navbar navbar-expand-lg navbar-dark my-navbar">
+      <a class="navbar-brand" href="./index.html"><img src="{% static 'img/logo-img.jpg' %}" class="site-logo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Категории</a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Кольца</a>
+              <a href="#" class="dropdown-item">Серьги</a>
+              <a href="#" class="dropdown-item">Подвески</a>
+              <a href="#" class="dropdown-item">Цепочки</a>
+              <a href="#" class="dropdown-item">Браслеты</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Коллекции</a>
+            <div class="dropdown-menu">
+              <a href="#" class="dropdown-item">Вижу по другому</a>
+              <a href="#" class="dropdown-item">Серьги</a>
+              <a href="#" class="dropdown-item">Подвесы</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Сотрудничество</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Оплата и доставка</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Контакты</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">О нас</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-danger sale-text" href="#">Акции</a>
+          </li>
+        </ul>
+      </div>
+      <button type="button" class="btn btn-outline-success ml-auto"><i class="flaticon-bag"> </i><span>0</span> Корзина</button>
+    </nav>
+  </header>
+
+
+    <div class="wrapper">
+        {% block content %}
+        {% endblock content %}
+    </div>
+
+
+  <!-- Footer section -->
+  <section class="footer-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="footer-widget about-widget">
+            <h2>ИНФОРМАЦИЯ</h2>
+            <ul>
+              <li><a href="">История бренда</a></li>
+              <li><a href="">Новости</a></li>
+              <li><a href="">Контакты</a></li>
+              <li><a href="">Сотрудничество</a></li>
+              <li><a href="">Ремонт украшений</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="footer-widget about-widget">
+            <h2>ОБРАТНАЯ СВЯЗЬ</h2>
+            <div>
+              <p> <i class="fa fa-phone text-primary"></i> +38(097) 751-53-04 <br><i class="fa fa-phone text-primary"></i> +38(097) 751-53-04
+                <br> <a href="mailto:info@sg-jewelry.com"> <i class="fa fa-envelope-o text-primary"></i>info@sg-jewelry.com</a>
+                <br><br>Пн-Пт 09:00-19:00 <br> Сб-Вс 10:00-15:00</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="footer-widget about-widget">
+            <h2>ПОКУПАТЕЛЯМ</h2>
+            <ul>
+              <li><a href="" class="sale-text">Акции</a></li>
+              <li><a href="">Оплата и доставка</a></li>
+              <li><a href="">Гарантия</a></li>
+              <li><a href="">Возврат/Обмен</a></li>
+              <li><a href="">Программа лояльности</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="social-links-warp">
+      <div class="container">
+        <div class="social-links text-center">
+          <a href="" class="facebook"><i class="fa fa-facebook"></i></a>
+          <a href="" class="instagram"><i class="fa fa-instagram"></i></a>
+          <a href="" class="twitter"><i class="fa fa-twitter"></i></a>
+          <a href="" class="youtube"><i class="fa fa-youtube"></i></a>
+          <button type="button" class="btn btn-outline-success btn-footer">Связаться с нами</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Footer section end -->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>
