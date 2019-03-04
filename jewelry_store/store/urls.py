@@ -1,9 +1,9 @@
-# from django.urls import path
-# from django.views.generic import TemplateView
-# from core.views import HomeView, DeliveryView
-#
-# urlpatterns = [
-#     path('contact/', TemplateView.as_view(template_name='core/contact.html')),
-#     path('', HomeView.as_view(), name='homeview'),
-#     path('delivery/', DeliveryView.as_view(), name='deliveryview'),
-# ]
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('product/<int:product_id>/', views.product, name='product'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

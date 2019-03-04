@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Главная
+{% endblock title %}
+
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        {% for image_item in product.productimage_set.all %}
+          <img class="responsive" src="{{ image_item.image.url }}">
+        {% endfor %}
+      </div>
+      <div class="col-lg-6">
+        <h1 class="text-center">
+          {{ product.name }}
+        </h1>
+        <div>
+          <p>Артикул: {{ product.vendor_code}}</p>
+
+          {% if not product.product.sale_percent %}
+            <h5><del> {{ product.price }} UAH</del></h5>
+            <h4 class="text-danger">Цена: {{ price_with_sale }} UAH</h4>
+          {% else %}
+            <h4>Цена: {{ product.price }} UAH</h4>
+          {% endif %}
+          <p>Доступные размеры: <br><br></p>
+
+
+          <ul class="nav nav-tabs" id="productTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="description-tab" data-toggle="tab" href="#description" role="tab" aria-controls="description" aria-selected="true">Описание</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="parameters-tab" data-toggle="tab" href="#parameters" role="tab" aria-controls="parameters" aria-selected="false">Характеристики</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="feedback-tab" data-toggle="tab" href="#feedback" role="tab" aria-controls="contact" aria-selected="false">Отзывы</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="productTabContent">
+            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+              <p>{{ product.description }}</p>
+            </div>
+            <div class="tab-pane fade" id="parameters" role="tabpanel" aria-labelledby="parameters-tab">
+              <hr><p>Для кого: {{ product.gender_for }}
+              <hr>
+              Тип изделия: {{ product.type }}
+              <hr>
+              Металл: {{ product.metal }}
+              <hr>
+              Коллекция: {{ product.collection.name }}
+              <hr>
+              Вставка:
+              {% if product.insertion %}
+                {{ product.insert_type }}
+              {% else %}
+                отсутствует
+              {% endif %}
+              </p><hr>
+            </div>
+            <div class="tab-pane fade" id="feedback" role="tabpanel" aria-labelledby="feedback-tab">
+              <p>Добавить форму с отзывом</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

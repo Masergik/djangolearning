@@ -1,14 +1,20 @@
 # from django.db.models import Q
+from datetime import datetime, time, date, timedelta
+
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
 
 from core.forms import AddProductForm
-from store.models import ProductImage
+from store.models import Product, ProductImage
 
 
 def index(request):
     products_images = ProductImage.objects.filter(is_active=True, is_main_img=True)
+    products_images_rings = products_images.filter(product__category__name='Кольца')
+    products_images_earrings = products_images.filter(product__category__name__in=['Серьги', 'Пусеты'])
+    new_products = products_images.order_by('-created')[:3]
+
     return render(request, 'core/index.html', locals())
 
 

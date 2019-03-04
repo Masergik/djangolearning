@@ -1,7 +1,12 @@
+import datetime
+
 from django.db import models
 
 
 # Create your models here.
+from django.utils.timezone import utc
+
+
 class AbstractCategoryMod(models.Model):
     name = models.CharField(max_length=30)
     description = models.TextField(default='', blank=True)
@@ -39,6 +44,7 @@ class Product(models.Model):
     collection = models.ForeignKey('store.Collection', on_delete=models.SET_NULL, null=True)
     category = models.ForeignKey('store.Category', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
+    sale_percent = models.ForeignKey('store.Sale', on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return "%s, арт. %s" % (self.name, self.vendor_code)
@@ -75,6 +81,9 @@ class Collection(AbstractCategoryMod):
         verbose_name = "Коллекция"
         verbose_name_plural = "Коллекции"
 
+    def __str__(self):
+        return self.name
+
 
 class Category(AbstractCategoryMod):
     image = models.ImageField('image', upload_to='category_img', null=True, default='', blank=True)
@@ -84,11 +93,14 @@ class Category(AbstractCategoryMod):
         verbose_name_plural = "Категории"
         ordering = ['name']
 
+    def __str__(self):
+        return self.name
+
 
 class Sale(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(default='', blank=True)
-    sale_percent = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    sale_percent = models.PositiveSmallIntegerField(default=0)
     collection = models.ForeignKey('store.Collection', on_delete=models.CASCADE, null=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)

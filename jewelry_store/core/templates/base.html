@@ -19,7 +19,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
 
-    <title>{% block title %}{% endblock title %}</title>
+    <title>{% block title %}{% endblock title %} - SG Jewelry</title>
   </head>
 
   <body>
@@ -50,7 +50,7 @@
   <!--<header class="header-section position-sticky" style="top:5px">-->
   <header class="header-section">
     <nav class="navbar navbar-expand-lg navbar-dark my-navbar">
-      <a class="navbar-brand" href="./index.html"><img src="{% static 'img/logo-img.jpg' %}" class="site-logo"></a>
+      <a class="navbar-brand" href="/"><img src="{% static 'img/logo-img.jpg' %}" class="site-logo"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -91,7 +91,7 @@
           </li>
         </ul>
       </div>
-      <button type="button" class="btn btn-outline-success ml-auto"><i class="flaticon-bag"> </i><span>0</span> Корзина</button>
+      <button type="button" class="btn btn-outline-success ml-auto"><i class="flaticon-bag"> </i><span class="badge badge-pill badge-success">10</span> Корзина</button>
     </nav>
   </header>
 
