@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-  Главная
+  Страница товара
 {% endblock title %}
 
 
@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col-lg-6">
         {% for image_item in product.productimage_set.all %}
-          <img class="responsive" src="{{ image_item.image.url }}">
+          <img class="responsive" src="/{{ image_item.image.url }}">
         {% endfor %}
       </div>
       <div class="col-lg-6">
@@ -21,7 +21,7 @@
         <div>
           <p>Артикул: {{ product.vendor_code}}</p>
 
-          {% if not product.product.sale_percent %}
+          {% if product.sale_percent.sale_percent %}
             <h5><del> {{ product.price }} UAH</del></h5>
             <h4 class="text-danger">Цена: {{ price_with_sale }} UAH</h4>
           {% else %}

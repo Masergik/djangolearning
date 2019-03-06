@@ -3,19 +3,19 @@ from datetime import datetime, time, date, timedelta
 
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from core.forms import AddProductForm
 from store.models import Product, ProductImage
 
 
-def index(request):
-    products_images = ProductImage.objects.filter(is_active=True, is_main_img=True)
-    products_images_rings = products_images.filter(product__category__name='Кольца')
-    products_images_earrings = products_images.filter(product__category__name__in=['Серьги', 'Пусеты'])
-    new_products = products_images.order_by('-created')[:3]
-
-    return render(request, 'core/index.html', locals())
+# def index(request):
+#     products_images = ProductImage.objects.filter(is_active=True, is_main_img=True)
+#     products_images_rings = products_images.filter(product__category__name='Кольца')
+#     products_images_earrings = products_images.filter(product__category__name__in=['Серьги', 'Пусеты'])
+#     new_products = products_images.order_by('-created')[:3]
+#
+#     return render(request, 'core/index.html', locals())
 
 
 class IndexView(TemplateView):
@@ -23,9 +23,28 @@ class IndexView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['products'] = Product.objects.filter(is_active=True)
-        print(context['products'])
+        products_images = ProductImage.objects.filter(is_active=True, is_main_img=True).select_related('product')\
+            .select_related('product__sale_percent')
+        products_images_rings = products_images.filter(product__category__name='Кольца')
+        products_images_earrings = products_images.filter(product__category__name__in=['Серьги', 'Пусеты'])
+        new_products = products_images.order_by('-created')[:3]
+
+        context.update({
+            'products_images': products_images,
+            'products_images_rings': products_images_rings,
+            'products_images_earrings': products_images_earrings,
+            'new_products': new_products
+        })
         return context
+
+
+class CategoryView(ListView):
+    template_name = 'core/category.html'
+    model = Product
+    context_object_name = 'products'
+
+    def get_queryset(self):
+        return self.model.objects.filter(category='Серьги')
 
 
 class HomeView(View):

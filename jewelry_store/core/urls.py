@@ -8,8 +8,8 @@ from core.views import AddProductView
 from core import views
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    # path('', IndexView.as_view(), name='index'),
+    # path('', views.index, name='index'),
+    path('', IndexView.as_view(), name='index_class'),
     path('contact/', TemplateView.as_view(template_name='core/contact.html')),
     # path('', HomeView.as_view(), name='homeview'),
     path('delivery/', DeliveryView.as_view(), name='deliveryview'),

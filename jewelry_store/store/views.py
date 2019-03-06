@@ -6,9 +6,9 @@ from store.models import Product
 
 
 def product(request, product_id):
-    getcontext().prec = 2
     product = Product.objects.get(id=product_id)
 
-    if product.sale_percent.sale_percent is not None:
-        price_with_sale = product.price * (1 - Decimal(product.sale_percent.sale_percent / 100))
+    if product.sale_percent.sale_percent != 0:
+        price_with_sale = (product.price * (1 - product.sale_percent.sale_percent / Decimal(100))).quantize(Decimal('1.00'))
+        print(product.sale_percent.sale_percent, type(product.sale_percent.sale_percent))
     return render(request, 'store/product.html', locals())

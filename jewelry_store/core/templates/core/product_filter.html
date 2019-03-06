@@ -8,7 +8,7 @@
             <a href="product/{{ product.product.id }}">
               <img src="{{ product.image.url }}" class="product-item-image">
             </a>
-            {% if product.product.sale_percent %}
+            {% if product.product.sale_percent.sale_percent %}
             <div class="tag-sale">
               <span>-{{ product.product.sale_percent.sale_percent }}%</span>
             </div>
