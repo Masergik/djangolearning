@@ -15,10 +15,11 @@
         {% endfor %}
       </div>
       <div class="col-lg-6">
+        <div class="product-info">
+
         <h1 class="text-center">
           {{ product.name }}
         </h1>
-        <div>
           <p>Артикул: {{ product.vendor_code}}</p>
 
           {% if product.sale_percent.sale_percent %}
@@ -27,8 +28,43 @@
           {% else %}
             <h4>Цена: {{ product.price }} UAH</h4>
           {% endif %}
-          <p>Доступные размеры: <br><br></p>
 
+          <div>
+            <form id="form_buy_product">
+              <fieldset class="form-group">
+                <div class="row">
+                 <p>Доступные размеры:</p>
+                  <div class="col-sm-10" id="product-size">
+                    <label><input type="radio" name="size" checked>16</label>&nbsp;
+                    <label><input type="radio" name="size">17.5</label>&nbsp;
+                    <label><input type="radio" name="size">18</label>&nbsp;
+                    <label><input type="radio" name="size">19</label>&nbsp;
+                  </div>
+
+                </div>
+              </fieldset>
+              <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Количество</label>
+                <div class="col-sm-3">
+                  <input type="number" class="form-control" id="quantity" placeholder="1"> <br>
+                </div>
+                <br>
+              </div>
+              <div class="form-group row">
+                <button type="submit" class="btn-lg btn-success btn-buy col-sm-6" id="submit_btn"
+                        data-product_id = "{{ product.id }}"
+                        data-vendor_code = "{{ product.vendor_code}}"
+                        data-name = "{{ product.name }}"
+                        data-price = "{{ product.price }}"
+                        data-sale = "{{ product.sale_percent.sale_percent }}"
+                        data-price_with_sale = "{{ price_with_sale }}"
+
+                >
+                  Добавить в корзину
+                </button>
+              </div>
+            </form>
+          </div>
 
           <ul class="nav nav-tabs" id="productTab" role="tablist">
             <li class="nav-item">
@@ -46,7 +82,7 @@
               <p>{{ product.description }}</p>
             </div>
             <div class="tab-pane fade" id="parameters" role="tabpanel" aria-labelledby="parameters-tab">
-              <hr><p>Для кого: {{ product.gender_for }}
+              <hr><p>Для кого: {{ product.get_gender_for_display }}
               <hr>
               Тип изделия: {{ product.type }}
               <hr>

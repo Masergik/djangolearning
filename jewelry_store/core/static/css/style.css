@@ -77,6 +77,7 @@ html, body {
     color: yellow;
 }
 
+
 /* ENDNavbar */
 
 
@@ -422,3 +423,15 @@ html, body {
     margin-bottom: 12px;
 }
 /* END Footer */
+
+
+/* ----------------
+  product.html
+---------------------*/
+.product-info {
+    margin: 50px 0px 0px 0px;
+}
+
+/* ----------------
+  END product.html
+---------------------*/

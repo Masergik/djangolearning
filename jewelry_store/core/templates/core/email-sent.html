@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  eMail отправлен
+{% endblock title %}
+
+{% block content %}
+<div class="col-lg-12">
+  <div class="card text-center border border-success mx-auto" style="width: 35rem; margin-top: 60px; margin-bottom: 60px">
+    <h4 class="card-header text-success">Ваше сообщение успешно отправлено!</h4>
+    <div class="card-body">
+      <p class="card-text">Наши менеджеры обязательно свяжутся с Вами <br>и ответят на все Ваши вопросы.</p>
+      <br>
+      <p class="text-info"><small>Через 5 секунд Вы будете перенаправлены на главную страницу...</small></p>
+    </div>
+  </div>
+</div>
+<script>setTimeout('window.location = "/";', 5000)</script>
+{% endblock content %}

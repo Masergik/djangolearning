@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Свяжитесь с нами
+{% endblock title %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="media-container-column col-lg-8 border border-secondary" data-form-type="formoid" style="margin: 50px; padding: 20px; background-color: #d5d5d5">
+    <form method="post">
+      {% csrf_token %}
+      <div class="row row-sm-offset">
+        <div class="col-md-4 multi-horizontal" data-for="name">
+          <div class="form-group">
+            <label class="form-control-label">ФИО</label>
+            {{ form.name }}
+          </div>
+        </div>
+        <div class="col-md-4 multi-horizontal" data-for="email">
+          <div class="form-group">
+            <label class="form-control-label">Email</label>
+            {{ form.sender_email }}
+          </div>
+        </div>
+        <div class="col-md-4 multi-horizontal" data-for="phone">
+          <div class="form-group">
+            <label class="form-control-label">Телефон</label>
+            {{ form.phone }}
+          </div>
+        </div>
+      </div>
+      <div class="form-group" data-for="subject">
+        <label class="form-control-label">Тема сообщения</label> <br>
+        {{ form.subject }}
+      </div>
+      <div class="form-group" data-for="message">
+        <label class="form-control-label">Сообщение</label>
+        {{ form.message }}
+      </div>
+      <div class="form-actions text-right">
+        <button type="submit" class="btn btn-success">Отправить сообщение</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}

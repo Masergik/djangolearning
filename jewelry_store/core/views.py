@@ -1,11 +1,10 @@
 # from django.db.models import Q
-from datetime import datetime, time, date, timedelta
-
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, FormView
 
-from core.forms import AddProductForm
+from core.forms import AddProductForm, ContactUsForm
 from store.models import Product, ProductImage
 
 
@@ -36,6 +35,27 @@ class IndexView(TemplateView):
             'new_products': new_products
         })
         return context
+
+
+class ContactUsView(FormView):
+    template_name = 'core/contact-us.html'
+    form_class = ContactUsForm
+    success_url = '/email-sent/'
+
+    def form_valid(self, form):
+        # store_email = ['masergineer@gmail.com']
+        store_email = ['test.sg.jewelry@gmail.com']
+        sender_email = form.cleaned_data['sender_email']
+        subject = form.cleaned_data['subject']
+        message = "{name} / {sender_email} / {phone} said: ".format(
+            name=form.cleaned_data['name'],
+            sender_email=form.cleaned_data['sender_email'],
+            phone=form.cleaned_data['phone'])
+        message += "\n\n{0}".format(form.cleaned_data['message'])
+
+        send_mail(subject, message, sender_email, store_email)
+
+        return super(ContactUsView, self).form_valid(form)
 
 
 class CategoryView(ListView):

@@ -3,10 +3,22 @@ from django import forms
 from store.models import Collection, Category, Product
 
 
+class ContactUsForm(forms.Form):
+    name = forms.CharField(required=True)
+    sender_email = forms.EmailField(required=True)
+    phone = forms.CharField(required=True)
+    subject = forms.CharField(widget=forms.widgets.TextInput(attrs={"class": "form-control"}), required=True)
+    message = forms.CharField(widget=forms.widgets.Textarea(
+        attrs={'class': "form-control", 'rows': 7, 'data-form-field': "Message"}
+    ), required=True)
+
+
 class AddProductForm(forms.Form):
     name = forms.CharField(required=True)
     vendor_code = forms.CharField(required=True)
-    description = forms.CharField(widget=forms.widgets.Textarea, required=True)
+    description = forms.CharField(widget=forms.widgets.Textarea(
+        attrs={'class': 'my-textarea', 'rows': 5}
+    ), required=True)
     metal = forms.CharField(required=True)
     insertion = forms.BooleanField()
     insert_type = forms.CharField()
