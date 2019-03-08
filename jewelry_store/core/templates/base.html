@@ -27,21 +27,26 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-4">
-            <div class="header-contact">
+            <div class="header-contact text-center">
               <p><a href="mailto:info@sg-jewelry.com"> <i class="fa fa-envelope-o text-primary"></i>info@sg-jewelry.com</a>
                 &nbsp; &nbsp; <i class="fa fa-phone text-primary"></i>+38(097) 751-53-04</p>
             </div>
           </div>
-          <div class="col-lg-5">
+          <div class="col-lg-4">
             <form class="header-search">
               <input type="search" placeholder="Введите название товара или артикул" class="header-search-text">
               <button type="submit"><i class="flaticon-search"></i></button>
             </form>
           </div>
-          <div class="col-lg-3 user-panel">
-            <div class="profile">
-              <a href="#" class="login"><i class="fa fa-sign-in"></i> <span class="d-none d-md-inline">Login</span></a> &nbsp; | &nbsp;
-              <a href="#" class="login"> <i class="fa fa-user"></i> <span class="d-none d-md-inline">Register</span></a>
+          <div class="col-lg-4 user-panel">
+            <div class="profile text-center">
+              {% if request.user.is_authenticated %}
+                <a href="#" class="login"> <i class="fa fa-user"></i> <span class="d-none d-md-inline">Личный кабинет ({{ request.user }})</span></a> &nbsp; | &nbsp;
+                <a href="{% url 'core:logout' %}" class="logout"><i class="fa fa-sign-out"></i> <span class="d-none d-md-inline">LogOut</span></a>
+              {% else %}
+                <a href="/login/" class="login"><i class="fa fa-sign-in"></i> <span class="d-none d-md-inline">LogIn</span></a> &nbsp; | &nbsp;
+                <a href="/registration/" class="registration"> <i class="fa fa-user"></i> <span class="d-none d-md-inline">Register</span></a>
+              {% endif %}
             </div>
           </div>
         </div>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  LogIn
+{% endblock title %}
+
+{% block content %}
+<div class="col-lg-12">
+  <div class="card text-center border border-success mx-auto" style="width: 35rem; margin-top: 60px; margin-bottom: 60px">
+    <h4 class="card-header text-success">Вы вышли из аккаунта!</h4>
+    <div class="card-body">
+      <p class="text-info"><small>Через 5 секунд Вы будете перенаправлены на главную страницу...</small></p>
+    </div>
+  </div>
+</div>
+<script>setTimeout('window.location = "/";', 5000)</script>
+{% endblock content %}

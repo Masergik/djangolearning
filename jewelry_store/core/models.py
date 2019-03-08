@@ -15,4 +15,8 @@ class ImageBox(models.Model):
 class MyUser(AbstractUser):
     phone = models.CharField(max_length=255, null=True)
     city = models.CharField(max_length=255, blank=True, null=True)
+    wishlist = models.ManyToManyField('store.Product', blank=True)
+
+    def __str__(self):
+        return self.username
 

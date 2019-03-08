@@ -1,6 +1,9 @@
 from django import forms
-
+from django.contrib.auth.forms import UserCreationForm
+from django.utils.translation import ugettext_lazy as _
 from store.models import Collection, Category, Product
+
+from core.models import MyUser
 
 
 class ContactUsForm(forms.Form):
@@ -11,6 +14,25 @@ class ContactUsForm(forms.Form):
     message = forms.CharField(widget=forms.widgets.Textarea(
         attrs={'class': "form-control", 'rows': 7, 'data-form-field': "Message"}
     ), required=True)
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)
+
+
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = MyUser
+        fields = (
+            'username', 'first_name', 'last_name', 'email', 'phone', 'city', 'password1', 'password2'
+        )
+        labels = {
+            'phone': _('Телефон'),
+            'city': _('Город'),
+        }
 
 
 class AddProductForm(forms.Form):

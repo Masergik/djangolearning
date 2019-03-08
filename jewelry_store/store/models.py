@@ -45,6 +45,7 @@ class Product(models.Model):
     category = models.ForeignKey('store.Category', on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     sale_percent = models.ForeignKey('store.Sale', on_delete=models.SET_NULL, null=True)
+    user_wishlist = models.ManyToManyField('core.MyUser', blank=True)
 
     def __str__(self):
         return "%s, арт. %s" % (self.name, self.vendor_code)

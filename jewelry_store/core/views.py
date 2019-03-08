@@ -1,12 +1,13 @@
 # from django.db.models import Q
+from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, ListView, FormView
 
-from core.forms import AddProductForm, ContactUsForm
+from core.forms import AddProductForm, ContactUsForm, RegistrationForm, LoginForm
 from store.models import Product, ProductImage
-
 
 # def index(request):
 #     products_images = ProductImage.objects.filter(is_active=True, is_main_img=True)
@@ -56,6 +57,57 @@ class ContactUsView(FormView):
         send_mail(subject, message, sender_email, store_email)
 
         return super(ContactUsView, self).form_valid(form)
+
+
+class LoginView(View):
+    template_name = 'core/login.html'
+
+    def get(self, request, *args, **kwargs):
+        form = LoginForm(request.POST)
+        context = {'form': form}
+        return render(self.request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user:
+                login(self.request, user)
+            return HttpResponseRedirect('/')
+        context = {'form': form}
+        return render(self.request, self.template_name, context)
+
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'core/logout.html')
+
+
+class RegistrationView(View):
+    template_name = 'core/registration.html'
+
+    def get(self, request, *args, **kwargs):
+        form = RegistrationForm(request.POST)
+        context = {'form': form}
+        return render(self.request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            new_user = form.save(commit=False)
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            phone = form.cleaned_data['phone']
+            city = form.cleaned_data['city']
+            new_user.save()
+            return HttpResponseRedirect('/')
+        context = {'form': form}
+        return render(self.request, self.template_name, context)
 
 
 class CategoryView(ListView):

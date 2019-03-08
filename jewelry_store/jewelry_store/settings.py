@@ -132,15 +132,13 @@ MEDIA_URL = 'media/'
 
 AUTH_USER_MODEL = 'core.MyUser'
 
+LOGOUT_REDIRECT_URL = '/logout/'
 
+
+# E-mail sending in contact-us
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-# Host for sending e-mail.
 EMAIL_HOST = 'smtp.gmail.com'
-
-# Port for sending e-mail.
 EMAIL_PORT = 587
-
 # Optional SMTP authentication information for EMAIL_HOST.
 EMAIL_HOST_USER = 'test.sg.jewelry@gmail.com'
 EMAIL_HOST_PASSWORD = 'L;fyujGfqnjy'
