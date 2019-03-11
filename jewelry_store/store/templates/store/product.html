@@ -30,7 +30,8 @@
           {% endif %}
 
           <div>
-            <form id="form_buy_product">
+             <form id="form_buy_product" action="{% url 'order:cart_adding' %}">
+              {% csrf_token %}
               <fieldset class="form-group">
                 <div class="row">
                  <p>Доступные размеры:</p>
@@ -46,7 +47,7 @@
               <div class="form-group row">
                 <label class="col-sm-3 col-form-label">Количество</label>
                 <div class="col-sm-3">
-                  <input type="number" class="form-control" id="quantity" placeholder="1"> <br>
+                  <input type="number" value="1" min="1" max="10" step="1" class="form-control quantity-input" id="quantity"> <br>
                 </div>
                 <br>
               </div>

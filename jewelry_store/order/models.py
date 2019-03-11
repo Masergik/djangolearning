@@ -53,6 +53,29 @@ class Order(models.Model):
         verbose_name_plural = 'Заказы'
 
 
+class ProductInCart(models.Model):
+    session_key = models.CharField(max_length=255, null=True)
+    order = models.ForeignKey('order.Order', on_delete=models.CASCADE, null=True, default=None, blank=True)
+    product = models.ForeignKey('store.Product', on_delete=models.SET_NULL, null=True)
+    quantity = models.PositiveSmallIntegerField(default=1)
+    is_active = models.BooleanField(default=True)
+    price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return '%s' % self.product.name
+
+    class Meta:
+        verbose_name = 'Товар в корзине'
+        verbose_name_plural = 'Товары в корзине'
+
+    def save(self, *args, **kwargs):
+        self.price_per_item = self.product.price
+        self.total_price = int(self.quantity) * self.price_per_item
+
+        super().save(*args, **kwargs)
+
+
 class ProductInOrder(models.Model):
     order = models.ForeignKey('order.Order', on_delete=models.CASCADE, null=True, default=None, blank=True)
     product = models.ForeignKey('store.Product', on_delete=models.SET_NULL, null=True)

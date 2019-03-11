@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  Коллекция "{{ collection.name }}"
+{% endblock title %}
+
+{% block content %}
+<div class="container text-center">
+  <h2 class="title-name">{{ collection.name }}</h2>
+  <div class="row">
+      {% for product in products_of_collection %}
+        {% include 'core/product_filter.html' %}
+      {% endfor %}
+  </div>
+</div>
+{% endblock content %}

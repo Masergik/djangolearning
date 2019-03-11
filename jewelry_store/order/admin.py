@@ -23,9 +23,17 @@ class ProductInOrderAdmin(admin.ModelAdmin):
     list_display = [field.name for field in ProductInOrder._meta.fields]
 
 
+class ProductInCartAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in ProductInCart._meta.fields]
+
+    class Meta:
+        model = ProductInCart
+
+
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderStatus, OrderStatusAdmin)
 admin.site.register(ProductInOrder, ProductInOrderAdmin)
+admin.site.register(ProductInCart, ProductInCartAdmin)
 admin.site.register(Delivery)
 admin.site.register(Payment)
 admin.site.register(Store)

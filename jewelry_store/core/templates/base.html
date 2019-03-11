@@ -64,7 +64,9 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Категории</a>
             <div class="dropdown-menu">
-              <a href="#" class="dropdown-item">Кольца</a>
+              {% for category in categories %}
+              <a href="{{ category.get_absolute_url }}" class="dropdown-item">{{ category.name }}</a>
+              {% endfor %}
               <a href="#" class="dropdown-item">Серьги</a>
               <a href="#" class="dropdown-item">Подвески</a>
               <a href="#" class="dropdown-item">Цепочки</a>
@@ -74,6 +76,9 @@
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Коллекции</a>
             <div class="dropdown-menu">
+              {% for collection in collections %}
+              <a href="{{ collection.get_absolute_url }}" class="dropdown-item">{{ collection.name }}</a>
+              {% endfor %}
               <a href="#" class="dropdown-item">Вижу по другому</a>
               <a href="#" class="dropdown-item">Серьги</a>
               <a href="#" class="dropdown-item">Подвесы</a>
@@ -97,7 +102,21 @@
         </ul>
       </div>
       <div class="cart-container">
-        <button type="button" class="btn btn-outline-success ml-auto"><i class="flaticon-bag"> </i><span class="badge badge-pill badge-success">10</span> Корзина</button>
+
+        <a href="/checkout/" type="button" class="btn btn-outline-success ml-auto"><i class="flaticon-bag"> </i><span class="badge badge-pill badge-success" id="cart_total_quantity">
+          {% if products_total_quantity %}
+            {{ products_total_quantity }}
+          {% else %}
+            0
+          {% endif %}
+        </span> Корзина</a>
+        <div class="cart-items d-none">
+          <ul>
+            {% for product_in_cart in products_in_cart %}
+              <li>{{ product_in_cart.product.name }}, {{ product_in_cart.quantity }} шт. по {{ product_in_cart.price_per_item }} грн</li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
     </nav>
   </header>
@@ -165,7 +184,8 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>

@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.urls import reverse
 
 
 # Create your models here.
@@ -9,6 +10,7 @@ from django.utils.timezone import utc
 
 class AbstractCategoryMod(models.Model):
     name = models.CharField(max_length=30)
+    slug_name = models.SlugField(null=True)
     description = models.TextField(default='', blank=True)
 
     class Meta:
@@ -85,6 +87,9 @@ class Collection(AbstractCategoryMod):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('store:collection', kwargs={'collection_slug_name': self.slug_name})
+
 
 class Category(AbstractCategoryMod):
     image = models.ImageField('image', upload_to='category_img', null=True, default='', blank=True)
@@ -96,6 +101,9 @@ class Category(AbstractCategoryMod):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('store:category', kwargs={'category_slug_name': self.slug_name})
 
 
 class Sale(models.Model):

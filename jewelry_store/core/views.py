@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, FormView
 
 from core.forms import AddProductForm, ContactUsForm, RegistrationForm, LoginForm
-from store.models import Product, ProductImage
+from store.models import Product, ProductImage, Category, Collection
 
 # def index(request):
 #     products_images = ProductImage.objects.filter(is_active=True, is_main_img=True)
@@ -28,8 +28,12 @@ class IndexView(TemplateView):
         products_images_rings = products_images.filter(product__category__name='Кольца')
         products_images_earrings = products_images.filter(product__category__name__in=['Серьги', 'Пусеты'])
         new_products = products_images.order_by('-created')[:3]
+        categories = Category.objects.all()
+        collections = Collection.objects.all()
 
         context.update({
+            'categories': categories,
+            'collections': collections,
             'products_images': products_images,
             'products_images_rings': products_images_rings,
             'products_images_earrings': products_images_earrings,

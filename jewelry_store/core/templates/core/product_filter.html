@@ -5,8 +5,8 @@
       <div class="col-lg-3 col-sm-6">
         <div class="product-item">
           <div class="pi-pic">
-            <a href="product/{{ product.product.id }}">
-              <img src="{{ product.image.url }}" class="product-item-image">
+            <a href="/product/{{ product.product.id }}/">
+              <img src="/{{ product.image.url }}/" class="product-item-image">
             </a>
             {% if product.product.sale_percent.sale_percent %}
             <div class="tag-sale">
