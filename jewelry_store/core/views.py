@@ -18,6 +18,19 @@ from store.models import Product, ProductImage, Category, Collection
 #     return render(request, 'core/index.html', locals())
 
 
+class BaseView(TemplateView):
+    template_name = 'base.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        categories = Category.objects.all()
+        collections = Collection.objects.all()
+        context.update({
+            'categories': categories,
+            'collections': collections,
+        })
+
+
 class IndexView(TemplateView):
     template_name = 'core/index.html'
 
@@ -87,6 +100,10 @@ class LoginView(View):
 def logout_view(request):
     logout(request)
     return render(request, 'core/logout.html')
+
+
+def about_us(request):
+    return render(request, 'core/about-us.html')
 
 
 class RegistrationView(View):

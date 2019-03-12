@@ -12,7 +12,6 @@ def product_view(request, product_id):
     # Создать session_key для неавторизированного пользователя
     if not session_key:
         request.session.cycle_key()
-    print(request.session.session_key)
 
     # Расчет цены товара со скидкой
     if product.sale_percent.sale_percent != 0:

@@ -261,6 +261,25 @@ body {
 ---------------------*/
 
 /* Main section */
+/* Collection Carousel */
+.carousel-caption-text {
+    text-shadow: 1px 1px 0px #333333;
+}
+
+.carousel-button {
+    border: 1px solid #555555;
+}
+
+.carousel-control-prev {
+    opacity: 0.8;
+}
+
+.carousel-control-next {
+    opacity: 0.8;
+}
+
+/* END Collection Carousel */
+
 /* Section New Products */
 .section-lastprod {
     padding-top: 50px;
@@ -269,6 +288,7 @@ body {
 
 .section-title h2 {
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 30px;
     font-weight: 600;
 }
@@ -432,7 +452,7 @@ body {
 }
 
 .product-filter-section .section-title {
-	margin-bottom: 70px;
+	margin-bottom: 30px;
 }
 
 .product-filter-menu {

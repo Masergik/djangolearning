@@ -1,8 +1,7 @@
 import datetime
-
 from django.db import models
 from django.urls import reverse
-
+from decimal import Decimal
 
 # Create your models here.
 from django.utils.timezone import utc
@@ -66,11 +65,24 @@ class ProductImage(models.Model):
     is_active = models.BooleanField(default=True)
     is_main_img = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = "Фото товара"
+        verbose_name_plural = "Фото товаров"
+
 
 class Size(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
     size = models.CharField(max_length=5, null=True, blank=True)
     weight = models.DecimalField(default=0, max_digits=5, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.size
+
+    class Meta:
+        verbose_name = "размер"
+        verbose_name_plural = "Доступные размеры"
+        ordering = ['size']
 
 
 class Collection(AbstractCategoryMod):

@@ -1,12 +1,11 @@
 from django.http import JsonResponse
-
+from django.shortcuts import render
 from core.models import MyUser
 from .forms import CheckoutClientForm
-from .models import ProductInCart
-from django.shortcuts import render
+from .models import ProductInCart, Cart
 
 
-def cart_adding(request):
+def cart_adding_view(request):
     return_dict = dict()
     session_key = request.session.session_key
     print(request.POST)
@@ -36,7 +35,32 @@ def cart_adding(request):
     return JsonResponse(return_dict)
 
 
-def checkout(request):
+def cart_view(request):
+    cart = Cart.objects.all()
+    context = {
+        'cart': cart
+    }
+    return render(request, 'cart.html', context)
+
+
+# def add_to_cart_view(request):
+#     session_key = request.session.session_key
+#     data = request.POST
+#     product_id = data.get("product_id")
+#     quantity = data.get("quantity")
+#
+#     new_product, created = ProductInCart.objects.get_or_create(
+#         session_key=session_key, product_id=product_id, is_active=True, defaults={"quantity": quantity}
+#     )
+#     if not created:
+#         new_product.quantity += int(quantity)
+#         new_product.save(force_update=True)
+#
+#     products_in_cart = ProductInCart.objects.filter(session_key=session_key, is_active=True)
+#     products_total_quantity = products_in_cart.count()
+
+
+def checkout_view(request):
     session_key = request.session.session_key
     products_in_cart = ProductInCart.objects.filter(session_key=session_key, is_active=True)
     form = CheckoutClientForm(request.POST)

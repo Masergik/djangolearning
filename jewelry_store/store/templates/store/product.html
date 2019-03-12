@@ -34,14 +34,14 @@
               {% csrf_token %}
               <fieldset class="form-group">
                 <div class="row">
-                 <p>Доступные размеры:</p>
-                  <div class="col-sm-10" id="product-size">
-                    <label><input type="radio" name="size" checked>16</label>&nbsp;
-                    <label><input type="radio" name="size">17.5</label>&nbsp;
-                    <label><input type="radio" name="size">18</label>&nbsp;
-                    <label><input type="radio" name="size">19</label>&nbsp;
-                  </div>
-
+                  {% if product.size_set.exists %}
+                   <p>Доступные размеры:</p>
+                    <div class="col-sm-10" id="product-size">
+                      {% for size_item in product.size_set.all %}
+                        <label><input type="radio" name="size" {% if forloop.first %} checked {% endif %}>{{ size_item.size }}</label>&nbsp;
+                      {% endfor %}
+                    </div>
+                  {% endif %}
                 </div>
               </fieldset>
               <div class="form-group row">
