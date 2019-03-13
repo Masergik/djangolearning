@@ -46,9 +46,8 @@ $(document).ready(function(){
 	console.log(form);
 	form.on('submit', function(e){
 	    e.preventDefault();
-	    console.log('123');
 	    var quantity = $('#quantity').val();
-	    console.log(quantity);
+        var size_value = $('.size_value:checked').val();
 	    var submit_btn = $('#submit_btn');
 	    var product_id = submit_btn.data("product_id");
 	    var product_name = submit_btn.data("name");
@@ -57,8 +56,10 @@ $(document).ready(function(){
 	    var product_sale = submit_btn.data("sale");
 	    var product_price_with_sale = submit_btn.data("price_with_sale");
 	    console.log(product_id);
-	    console.log(product_vendor_code);
 	    console.log(product_name);
+	    console.log(product_vendor_code);
+	    console.log(quantity);
+	    console.log(size_value);
 	    console.log(product_price);
 	    console.log(product_sale);
 	    console.log(product_price_with_sale);
@@ -66,6 +67,7 @@ $(document).ready(function(){
             var data = {};
             data.product_id = product_id;
             data.quantity = quantity;
+            data.size = size_value;
             var csrf_token = $('#form_buy_product [name="csrfmiddlewaretoken"]').val();
             data["csrfmiddlewaretoken"] = csrf_token;
             var url = form.attr("action");
@@ -78,29 +80,29 @@ $(document).ready(function(){
              cache: true,
              success: function (data) {
                  console.log("OK");
+                 console.log(data.size);
                  console.log(data.products_total_quantity);
                  if (data.products_total_quantity){
                     $('#cart_total_quantity').text(data.products_total_quantity);
                     console.log(data.products);
                     $('.cart-items ul').html("");
                     $.each(data.products, function(k, v){
-                        $('.cart-items ul').append('<li>'+v.name+', '+v.quantity+' шт. по '+v.price_per_item+' грн  '+
+                        $('.cart-items ul').append('<li>'+v.name+' (размер: '+v.size+'), '+v.quantity+' шт. по '+v.price_per_item+' грн  '+
                 	    //'<a href="" class="delete-item"> <i class="flaticon-cancel-1"> </a>'+
                         '</li>');
-                    })
+                    });
                  }
-
              },
              error: function(){
-                console.log("error")
+                console.log("error");
              }
         })
 
 	});
 
-    function showingCart(){
-        $('.cart-items').toggleClass('d-none');
-    };
+//    function showingCart(){
+//        $('.cart-items').toggleClass('d-none');
+//    };
 
 //	$('.cart-container').on('click', function(e){
 //	    e.preventDefault();
@@ -108,17 +110,17 @@ $(document).ready(function(){
 //	});
 
 	$('.cart-container').mouseover(function(){
-	    showingCart();
+	    $('.cart-items').removeClass('d-none');
 	});
 
 	$('.cart-container').mouseout(function(){
-	    showingCart();
+	    $('.cart-items').addClass('d-none');
 	});
 
-	$(document).on('click', '.delete-item', function(e){
-	    e.preventDefault();
-	    $(this).closest('li').remove();
-	});
+//	$(document).on('click', '.delete-item', function(e){
+//	    e.preventDefault();
+//	    $(this).closest('li').remove();
+//	});
 //
 //	function calculatingCartAmount(){
 //	var total_order_amount = 0

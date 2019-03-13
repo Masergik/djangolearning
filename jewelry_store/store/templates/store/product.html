@@ -38,9 +38,11 @@
                    <p>Доступные размеры:</p>
                     <div class="col-sm-10" id="product-size">
                       {% for size_item in product.size_set.all %}
-                        <label><input type="radio" name="size" {% if forloop.first %} checked {% endif %}>{{ size_item.size }}</label>&nbsp;
+                        <label><input class="size_value" type="radio" name="size" {% if forloop.first %} checked {% endif %} value="{{ size_item.size }}">{{ size_item.size }}</label>&nbsp;
                       {% endfor %}
                     </div>
+                  {% else %}
+                  <label hidden><input class="size_value" type="radio" name="size" checked value="-" disabled>-</label>
                   {% endif %}
                 </div>
               </fieldset>

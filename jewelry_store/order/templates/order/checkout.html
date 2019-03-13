@@ -26,9 +26,12 @@
               <div class="item">
                 <div class="row d-flex align-items-center">
                   <div class="col-5">
-                    <div class="d-flex align-items-center"><img src="https://d19m59y37dris4.cloudfront.net/hub/1-4-1/img/shirt.png" alt="..." class="cart-img-fluid">
+                    <!-- !!!!!!!!!!Разобраться с картинкой к товару!!!!!!!!!!!!!!! -->
+                    <div class="d-flex align-items-center"><img src="/{{ product_in_cart.product.productimage__image.first.url }}" alt="..." class="cart-img-fluid">
+                      <p>{{ product_in_cart.product.productimage_set.id }}</p>
+                      <!--product_in_cart.product.productimage__image.first-->
                       <div class="title"><a href="detail.html">
-                          <h5>{{ product_in_cart.product.name }}</h5><span class="text-muted">Size: Large</span></a></div>
+                          <h5>{{ product_in_cart.product.name }}</h5><span class="text-muted">Размер: {{ product_in_cart.size }}</span></a></div>
                     </div>
                   </div>
                   <div class="col-2"><span class="product-price-per-item">{{ product_in_cart.price_per_item }}</span></div>

@@ -57,6 +57,7 @@ class ProductInCart(models.Model):
     session_key = models.CharField(max_length=255, null=True)
     order = models.ForeignKey('order.Order', on_delete=models.CASCADE, null=True, default=None, blank=True)
     product = models.ForeignKey('store.Product', on_delete=models.SET_NULL, null=True)
+    size = models.CharField(max_length=5, null=True)
     quantity = models.PositiveSmallIntegerField(default=1)
     is_active = models.BooleanField(default=True)
     price_per_item = models.DecimalField(max_digits=10, decimal_places=2, default=0)

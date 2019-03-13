@@ -12,9 +12,10 @@ def cart_adding_view(request):
     data = request.POST
     product_id = data.get("product_id")
     quantity = data.get("quantity")
+    size = data.get("size")
 
     new_product, created = ProductInCart.objects.get_or_create(
-        session_key=session_key, product_id=product_id, is_active=True, defaults={"quantity": quantity}
+        session_key=session_key, product_id=product_id, size=size, is_active=True, defaults={"quantity": quantity}
     )
     if not created:
         new_product.quantity += int(quantity)
@@ -28,6 +29,7 @@ def cart_adding_view(request):
     for item in products_in_cart:
         product_dict = dict()
         product_dict["name"] = item.product.name
+        product_dict["size"] = item.size
         product_dict["price_per_item"] = item.price_per_item
         product_dict["quantity"] = item.quantity
         return_dict["products"].append(product_dict)
@@ -40,7 +42,7 @@ def cart_view(request):
     context = {
         'cart': cart
     }
-    return render(request, 'cart.html', context)
+    return render(request, 'order/cart.html', context)
 
 
 # def add_to_cart_view(request):
