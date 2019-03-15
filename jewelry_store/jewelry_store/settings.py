@@ -71,7 +71,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
 
-                'order.context_processors.getting_cart_info'
+                'order.context_processors.getting_cart_info',
             ],
         },
     },

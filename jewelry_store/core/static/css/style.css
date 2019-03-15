@@ -84,8 +84,8 @@ html, body {
 .cart-items {
     position: absolute;
     top: 42px;
-    left: -350px;
-    width: 500px;
+    left: -400px;
+    width: 550px;
     border: 1px solid #28a745;
     border-radius: .25rem;
     background-color: #56ce71;;
@@ -719,6 +719,13 @@ body {
 
 .btn-wide {
     margin: 15px;
+}
+
+.btn-order{
+    margin: 50px 135px 15px 35px;
+    width: 405px;
+    height: 70px;
+    font-size: 30px;
 }
 /* ----------------
   ENDcheckout.html

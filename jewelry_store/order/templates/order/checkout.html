@@ -12,13 +12,13 @@
     {% csrf_token %}
       <div class="container">
         <div class="cart cart-holder">
-          <h3 class="text-center">Товары в корзине</h3>
+          <h3 class="text-center">Товары в заказе</h3>
             <div class="row cart-header">
-                <div class="col-5 text-center">Название товара</div>
-                <div class="col-2">Цена</div>
-                <div class="col-2">Количество</div>
-                <div class="col-2">Всего</div>
-                <div class="col-1 text-center">Удалить</div>
+              <div class="col-5 text-center">Название товара</div>
+              <div class="col-1 text-center">Размер</div>
+              <div class="col-2 text-center">Цена</div>
+              <div class="col-2 text-center">Количество</div>
+              <div class="col-2 text-center">Всего</div>
             </div>
             <div class="cart-body">
               <!-- Product list-->
@@ -26,21 +26,14 @@
               <div class="item">
                 <div class="row d-flex align-items-center">
                   <div class="col-5">
-                    <!-- !!!!!!!!!!Разобраться с картинкой к товару!!!!!!!!!!!!!!! -->
-                    <div class="d-flex align-items-center"><img src="/{{ product_in_cart.product.productimage__image.first.url }}" alt="..." class="cart-img-fluid">
-                      <p>{{ product_in_cart.product.productimage_set.id }}</p>
-                      <!--product_in_cart.product.productimage__image.first-->
-                      <div class="title"><a href="detail.html">
-                          <h5>{{ product_in_cart.product.name }}</h5><span class="text-muted">Размер: {{ product_in_cart.size }}</span></a></div>
+                    <div class="d-flex align-items-center">
+                      <div class="title"><h5>{{ product_in_cart.product.name }} <span class="text-muted small">(арт.: {{ product_in_cart.product.vendor_code }})</span></h5></div>
                     </div>
                   </div>
-                  <div class="col-2"><span class="product-price-per-item">{{ product_in_cart.price_per_item }}</span></div>
-                  <div class="col-2 d-flex align-items-center quantity d-flex">
-                    <span class="text-center quantity-input">{{ product_in_cart.quantity }}</span>
-                    <!--<input type="number" value="{{ 1product_in_cart.quantity }}" disabled min="1" max="30" step="1" class="quantity-input">-->
-                  </div>
-                  <div class="col-2"><span class="product-total-price">{{ product_in_cart.total_price }}</span></div>
-                  <div class="col-1 text-center"><i class="delete fa fa-trash"></i></div>
+                  <div class="col-1 text-center"><span class="product-size">{{ product_in_cart.size }}</span></div>
+                  <div class="col-2 text-center"><span class="product-price-per-item">{{ product_in_cart.price_per_item }}</span></div>
+                  <div class="col-2 text-center"><span class="product-quantity">{{ product_in_cart.quantity }}</span></div>
+                  <div class="col-2 text-center"><span class="product-total-price">{{ product_in_cart.total_price }}</span></div>
                 </div>
               </div>
               {% endfor %}
@@ -79,10 +72,16 @@
             <input type="text" name="{{ form.address.html_name }}" class="form-control" value="{{ client.city }}">
           </div>
       </div>
+      <div class="col-lg-8 offset-lg-2">
+          <div class="form-group">
+            <label>Комментарий</label>
+            <textarea placeholder="Укажите способ оплаты и доставки..." name="{{ form.comments.html_name }}" class="form-control"></textarea>
+          </div>
+      </div>
     </div>
 
       <div class="container">
-        <div class="d-flex align-items-center justify-content-center justify-content-md-end flex-column flex-md-row"><a href="/" class="btn btn-lg btn-outline-success btn-wide">Продолжить покупки</a> <button type="submit" class="btn btn-lg btn-success btn-wide">Заказать</button></div>
+        <div class="d-flex align-items-center justify-content-center justify-content-md-end flex-column flex-md-row"><button type="submit" class="btn btn-lg btn-danger btn-order">Заказать</button></div>
       </div>
   </form>
 </section>

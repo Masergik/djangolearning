@@ -16,19 +16,16 @@
       </div>
       <div class="col-lg-6">
         <div class="product-info">
-
         <h1 class="text-center">
           {{ product.name }}
         </h1>
           <p>Артикул: {{ product.vendor_code}}</p>
-
           {% if product.sale_percent.sale_percent %}
             <h5><del> {{ product.price }} UAH</del></h5>
             <h4 class="text-danger">Цена: {{ price_with_sale }} UAH</h4>
           {% else %}
             <h4>Цена: {{ product.price }} UAH</h4>
           {% endif %}
-
           <div>
              <form id="form_buy_product" action="{% url 'order:cart_adding' %}">
               {% csrf_token %}

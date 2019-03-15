@@ -34,9 +34,6 @@ $(window).on('load', function() {
 	});
 })(jQuery);
 
-
-
-
 	/*------------------
 		Product Form
 	--------------------*/
@@ -44,6 +41,46 @@ $(document).ready(function(){
 
 	var form = $('#form_buy_product');
 	console.log(form);
+
+	function cartUpdating(product_id, quantity, size_value, is_delete) {
+	    var data = {};
+        data.product_id = product_id;
+        data.quantity = quantity;
+        data.size = size_value;
+        var csrf_token = $('#header_find_prod [name="csrfmiddlewaretoken"]').val();
+        data["csrfmiddlewaretoken"] = csrf_token;
+
+        if (is_delete) {
+            data["is_delete"] = true;
+        }
+
+        var url = form.attr("action");
+
+        console.log(data)
+        $.ajax({
+             url: url,
+             type: 'POST',
+             data: data,
+             cache: true,
+             success: function (data) {
+                 console.log("OK");
+                 if (data.products_total_quantity || data.products_total_quantity == 0){
+                    $('#cart_total_quantity').text(data.products_total_quantity);
+                    console.log(data.products);
+                    $('.cart-items ul').html("");
+                    $.each(data.products, function(k, v){
+                        $('.cart-items ul').append('<li>'+v.name+' (размер: '+v.size+'), '+v.quantity+' шт. по '+v.price_per_item+' грн  '+
+                	    '<a href="" class="delete-item" data-product_id="'+v.id+' "> <i class="flaticon-cancel-1"></i></a>'+
+                        '</li>');
+                    });
+                 }
+             },
+             error: function(){
+                console.log("error");
+             }
+        });
+	};
+
 	form.on('submit', function(e){
 	    e.preventDefault();
 	    var quantity = $('#quantity').val();
@@ -63,52 +100,13 @@ $(document).ready(function(){
 	    console.log(product_price);
 	    console.log(product_sale);
 	    console.log(product_price_with_sale);
+	    var is_delete = false;
 
-            var data = {};
-            data.product_id = product_id;
-            data.quantity = quantity;
-            data.size = size_value;
-            var csrf_token = $('#form_buy_product [name="csrfmiddlewaretoken"]').val();
-            data["csrfmiddlewaretoken"] = csrf_token;
-            var url = form.attr("action");
-
-        console.log(data)
-        $.ajax({
-             url: url,
-             type: 'POST',
-             data: data,
-             cache: true,
-             success: function (data) {
-                 console.log("OK");
-                 console.log(data.size);
-                 console.log(data.products_total_quantity);
-                 if (data.products_total_quantity){
-                    $('#cart_total_quantity').text(data.products_total_quantity);
-                    console.log(data.products);
-                    $('.cart-items ul').html("");
-                    $.each(data.products, function(k, v){
-                        $('.cart-items ul').append('<li>'+v.name+' (размер: '+v.size+'), '+v.quantity+' шт. по '+v.price_per_item+' грн  '+
-                	    //'<a href="" class="delete-item"> <i class="flaticon-cancel-1"> </a>'+
-                        '</li>');
-                    });
-                 }
-             },
-             error: function(){
-                console.log("error");
-             }
-        })
+        cartUpdating(product_id, quantity, size_value, is_delete);
 
 	});
 
-//    function showingCart(){
-//        $('.cart-items').toggleClass('d-none');
-//    };
-
-//	$('.cart-container').on('click', function(e){
-//	    e.preventDefault();
-//	    showingCart();
-//	});
-
+// Отображение окна корзины при наведении на кнопку "Корзина" в Navbar
 	$('.cart-container').mouseover(function(){
 	    $('.cart-items').removeClass('d-none');
 	});
@@ -117,34 +115,46 @@ $(document).ready(function(){
 	    $('.cart-items').addClass('d-none');
 	});
 
-//	$(document).on('click', '.delete-item', function(e){
-//	    e.preventDefault();
-//	    $(this).closest('li').remove();
-//	});
-//
-//	function calculatingCartAmount(){
-//	var total_order_amount = 0
-//	    $('.product-total-price').each(function(){
-//	        total_order_amount += parseInt($(this).text());
-//	    });
-//	    $('#total_order_amount').text(total_order_amount);
-//	};
-//
-//	$(document).on('change', ".quantity-input", function(){
-//	    var current_quantity = parseInt($(this).val());
-//	    console.log(current_quantity)
-//
-//	    var current_div = $(this).closest('span');
-//	    var current_price = parseInt(current_div.find('.product-price-per-item').text());
-//	    console.log(current_price)
-//	    var total_amount = current_quantity*current_price;
-//	    console.log(total_amount)
-//	    current_div.find('.product-total-price').text(total_amount);
-//
-//	    calculatingCartAmount();
-//	})
-//
-//	calculatingCartAmount();
+     $(document).on('click', '.delete-item', function(e){
+         e.preventDefault();
+         var product_id = $(this).data("product_id");
+         console.log(product_id);
+         var quantity = 0;
+         var size_value = $(this).data("size");
+         var is_delete = true;
+
+         cartUpdating(product_id, quantity, size_value, is_delete);
+     });
+
+/////////////////////////////////////////////////////////////
+// Пофиксить обновление количества товаров в корзине
+    function calculatingCartAmount(){
+        var total_order_amount = 0;
+        $('.product-total-price').each(function() {
+            total_order_amount = total_order_amount + parseFloat($(this).text());
+        });
+        console.log(total_order_amount);
+        $('#total_order_amount').text(total_order_amount.toFixed(2));
+    };
+
+    $(document).on('change', ".quantity-input", function(){
+        var current_quantity = $(this).val();
+        console.log(current_quantity);
+
+        var current_div = $(this).closest('span');
+        var current_price = parseFloat(current_div.find('.product-price-per-item').text()).toFixed(2);
+        console.log(current_price);
+        var total_amount = parseFloat(current_quantity*current_price).toFixed(2);
+        console.log(total_amount);
+        current_div.find('.product-total-price').text(total_amount);
+
+        calculatingCartAmount();
+    });
+
+    calculatingCartAmount();
+
+///////////////////////////////////////////////////////////
+
 })
 
 

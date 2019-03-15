@@ -12,12 +12,12 @@ def product_view(request, product_id):
     # Создать session_key для неавторизированного пользователя
     if not session_key:
         request.session.cycle_key()
+    print(request.session.session_key)
 
     # Расчет цены товара со скидкой
     if product.sale_percent.sale_percent != 0:
         price_with_sale = (product.price * (1 - product.sale_percent.sale_percent / Decimal(100)))\
             .quantize(Decimal('1.00'))
-        print(product.sale_percent.sale_percent, type(product.sale_percent.sale_percent))
     return render(request, 'store/product.html', locals())
 
 

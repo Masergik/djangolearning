@@ -64,38 +64,35 @@ class ProductInCart(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        return '%s' % self.product.name
+        return '%s. %s, %s грн' % (self.id, self.product.name, self.total_price)
 
     class Meta:
         verbose_name = 'Товар в корзине'
         verbose_name_plural = 'Товары в корзине'
 
     def save(self, *args, **kwargs):
-        self.price_per_item = self.product.price
+        price_per_item = self.product.price
+        self.price_per_item = price_per_item
         self.total_price = int(self.quantity) * self.price_per_item
 
         super().save(*args, **kwargs)
 
 
 class Cart(models.Model):
+    session_key = models.CharField(max_length=255, null=True)
     is_active = models.BooleanField(default=True)
-    status = models.ForeignKey('order.OrderStatus', on_delete=models.SET_NULL, null=True)
     items = models.ManyToManyField('order.ProductInCart', blank=True)
     cart_total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
-    client_email = models.EmailField(default=None, null=True, blank=True)
-    client_firstname = models.CharField(max_length=20, default=None, null=True, blank=True)
-    client_lastname = models.CharField(max_length=20, default=None, null=True, blank=True)
-    client_phone = models.CharField(max_length=20, default=None, null=True, blank=True)
-    client_address = models.CharField(max_length=255, default=None, null=True, blank=True)
-    comments = models.TextField(null=True, blank=True)
-    delivery_method = models.ForeignKey('order.Delivery', on_delete=models.SET_NULL, null=True)
-    payment_method = models.ForeignKey('order.Payment', on_delete=models.SET_NULL, null=True)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return str(self.id)
+
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзины'
 
 
 class ProductInOrder(models.Model):

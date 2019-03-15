@@ -7,7 +7,56 @@
 
 {% block content %}
 <!-- Shopping Cart Section-->
-<p>
-  {{ cart }}
-</p>
+<section class="shopping-cart">
+  <form method="post" id="form_buy_product" action="{% url 'order:cart_adding' %}">
+    {% csrf_token %}
+      <div class="container">
+        <div class="cart cart-holder">
+          <h3 class="text-center">Товары в корзине</h3>
+            <div class="row cart-header">
+                <div class="col-5 text-center">Название товара</div>
+                <div class="col-2">Цена</div>
+                <div class="col-2">Количество</div>
+                <div class="col-2">Всего</div>
+                <div class="col-1 text-center">Удалить</div>
+            </div>
+            <div class="cart-body">
+              <!-- Product list-->
+              {% for product_in_cart in products_in_cart %}
+              <div class="item">
+                <div class="row d-flex align-items-center">
+                  <div class="col-5">
+                    <div class="d-flex align-items-center">
+                      <img src="/{{ product_in_cart.product.productimage_set.first.image.url }}" alt="..." class="cart-img-fluid">
+                      <div class="title"><a href="/product/{{ product_in_cart.product.id }}/">
+                          <h5>{{ product_in_cart.product.name }}</h5><span class="text-muted">Размер: {{ product_in_cart.size }}</span></a></div>
+                    </div>
+                  </div>
+                  <div class="col-2"><span class="product-price-per-item">{{ product_in_cart.price_per_item }}</span></div>
+                  <div class="col-2 d-flex align-items-center quantity d-flex">
+
+                                <!-- Пофиксить main.js для изменения количества товаров в корзине -->
+                    <span class="text-center quantity-input">{{ product_in_cart.quantity }}</span>
+                    <!--<input type="number" value="{{ product_in_cart.quantity }}" min="1" max="30" step="1" class="quantity-input">-->
+
+                  </div>
+                  <div class="col-2"><span class="product-total-price">{{ product_in_cart.total_price }}</span></div>
+                  <div class="col-1 text-center">
+                    <a href=""><i class="delete-item fa fa-trash" data-product_id="{{ product_in_cart.id }}" data-size="{{ product_in_cart.size }}"></i></a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="total-amount"><b>Сумма заказа:</b> <span id="total_order_amount">{{ cart_total_price }} грн</span></p>
+      </div>
+      <div class="container">
+        <div class="d-flex align-items-center justify-content-center justify-content-md-end flex-column flex-md-row"><a href="/" class="btn btn-lg btn-outline-success btn-wide">Продолжить покупки</a> <a href="/checkout/" type="submit" class="btn btn-lg btn-success btn-wide">Оформить заказ</a></div>
+      </div>
+  </form>
+</section>
+
 {% endblock content %}
